@@ -1,0 +1,22 @@
+{
+  "name": "LaunchpadAPI",
+  "version": "1.0.0",
+  "description": "Launchpad is an idea validation platform designed to help users share, evaluate, and discover startup ideas within a structured community environment.",
+  "main": "app.js",
+  "type": "commonjs",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "LUCKY EGHO",
+  "license": "ISC",
+  "packageManager": "pnpm@10.30.2",
+  "dependencies": {
+    "body-parser": "^2.2.2",
+    "cors": "^2.8.6",
+    "dotenv": "^17.3.1",
+    "express": "^5.2.1",
+    "express-session": "^1.19.0",
+    "mongoose": "^9.2.2"
+  }
+}
