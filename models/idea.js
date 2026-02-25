@@ -13,6 +13,7 @@ const voteSchema = new mongoose.Schema({
 
 const ideaSchema = new mongoose.Schema({
     author: {type: String, required: true},
+    authorId: {type: mongoose.ObjectId, required: true},
     title: {type: String, required: true},
     category: {type: String, required: true},
     shortDescription: {type: String, required: true},

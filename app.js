@@ -97,7 +97,7 @@ app.post("/login", (req, res, next) => {
 });
 
 
-app.post("/logout", (req, res) => {
+app.get("/logout", (req, res) => {
   if (!req.user) return res.json({message: "No User is logged in"});
   const user = req.user;
   req.logout(err=>{
@@ -106,7 +106,7 @@ app.post("/logout", (req, res) => {
   res.json({ message: "Logged out Successfully", username: user.fullName })
 });
 
-app.route("/:user/idea")
+app.route("/:user/ideas")
   .get(async (req, res) => {
     const fullName = _.lowerCase(req.params.user);
     if (req.isAuthenticated()){
@@ -134,18 +134,57 @@ app.route("/:user/idea")
       // console.log(req.session);
       const idea = await Idea.create({
         author: req.user.fullName,
+        authorId: req.user._id,
         title,
-        category,
         category,
         shortDescription,
         fullDescription
-      })
+      });
 
       return res.json({message: "Idea Created Successfully", idea})
     } catch(err){
       console.log(err);
       return res.json({message: "Error Creating Idea"});
     }
+  });
+
+app.route("/:user/ideas/:ideaId")
+  .get(async (req, res) => {
+    if (!req.isAuthenticated()){
+      return res.json({message: "User not Authenticated"});
+    }
+    
+    const {user, ideaId} = req.params;
+    if (user !== req.user.fullName){
+      return res.json({message: `${user} is not Authenticated`});
+    }
+
+    const idea = await Idea.findOne({_id: ideaId});
+    if (!idea){
+      return res.json({message: `Idea with _id: ${ideaId} not found`});
+    }
+    return res.json(idea);
+  })
+
+  .delete(async (req, res) => {
+    if (!req.isAuthenticated()){
+      return res.json({message: "User not Authenticated"})
+    }
+
+    const {user, ideaId} = req.params;
+    if (user !== req.user.fullName){
+      return res.json({message: `${user} is not Authenticated`});
+    }
+
+    const idea = await Idea.findOne({_id: ideaId});
+    if (idea){
+      if (idea.authorId.equals(req.user._id)){
+        await Idea.deleteOne({_id: ideaId});
+        return res.json({message: `Successfully Deleted Idea _id: ${ideaId}`})
+      } 
+      return res.json({message: `Idea _id: ${ideaId} can only be deleted by Author ${idea.author}`});
+    } 
+    return res.json({message: `Idea with _id: ${ideaId} not found`});
   });
 
 
