@@ -45,14 +45,14 @@ node app.js
 ```
 
 ###  🏠 Root Route  
-GET /  
+GET `/`  
 Returns: "Register and/or login to use this platform"
 
 ###  👤 Authentication
 
 ####  🔐 Register  
 
-POST /register
+POST `/register`
 ```bash
 Required_Fields = {
   "email": "string", // User email 
@@ -68,7 +68,7 @@ Automatically logs them in
 
 ####  🔑 Login  
 
-POST /login
+POST `/login`
 ```bash
 Required_Fields = {
   "username": "string", // User email
@@ -80,11 +80,11 @@ Required_Fields = {
 ####  💡 Ideas  
 📄 Get All Ideas
 
-GET  /user/ideas
+GET  `/<user>/ideas`  
 Returns all ideas published by users.
 
 ####  ➕ Create Idea  
-POST /user/ideas
+POST `/<user>/ideas`
 ```bash
 Required_Fields = {
   "title": "string",
@@ -102,8 +102,8 @@ Returns idea by ideaId.
 
 
 ####  ❌ Delete Idea
-```
-DELETE /<user>/ideas/<ideaId>
-```
+
+DELETE `/<user>/ideas/<ideaId>`
+
 Deletes idea by ideaId
 Only allowed if the idea belongs to the logged-in user
