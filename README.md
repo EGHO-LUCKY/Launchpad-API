@@ -1,42 +1,93 @@
-# Launchpad API
+# 🚀 Launchpad API
 
-## USAGE
-pnpm add
+> A RESTful API for registering users and publishing ideas.
 
-Add Environment variable
+---
 
-## ROUTES
-### https://<base url>/ 
-=========== Returns ============== 
-"Register and/or login to use this platform"
+## 📌 Overview
+
+Launchpad API allows users to:
+
+- Register and authenticate
+- Create and publish ideas
+- View ideas
+- Delete their own ideas
+
+---
+
+## ⚙️ Installation
+
+### 1️⃣ Install dependencies
+
+```bash
+pnpm install
+
+---
+### 2️⃣ Setup environment variables
+
+Create a .env file in the root directory and add:
+
+PORT=5000
+MONGO_URI=your_database_connection_string
+SECRET=your_secret_key
+
+###  3️⃣ Run the server
+node app.js
+
+🌐 API Endpoints
+
+<base_url> = Your deployed URL or http://localhost:PORT
+
+🏠 Root Route
+GET /
+Returns: "Register and/or login to use this platform"
+
+👤 Authentication
+
+🔐 Register
+
+POST /register
+Required_Fields = {
+  "email": "string",
+  "username": "string",
+  "password": "string"
+}
+
+✅ On success:
+
+Registers user
+Automatically logs them in
+
+🔑 Login
+
+POST /login
+Required_Fields = {
+  "username": "string",
+  "password": "string"
+}
 
 
-### https://<base url>/register
-=========== Requires ============= 
-nameOfInputFields = {"email", "username" and "password"}
+💡 Ideas
+📄 Get All Ideas
 
-On Success: REGISTERS AND LOGIN USER
-================================== 
+GET /<user>/ideas
+Returns all ideas published by users.
 
+➕ Create Idea
+POST /<user>/ideas
+Required_Fields = {
+  "title": "string",
+  "category": "string",
+  "shortDescription": "string",
+  "fullDescription": "string"
+}
 
-### https://<base url>/login
-=========== Requires ============= 
-nameOfInputFields = {"username" and "password"}
-
-
-### https://<base url>/<user>/ideas
-GET: Gets all Ideas published by users
-POST: Creates an Idea with the required input fields
-nameOfInputFields = {title, category, shortDescription fullDescription}
-================================== 
-
-
-### https://<base url>/<user>/ideas/<ideaId>
-GET: Gets Idea by ideaId
-DELETE: Deletes Idea by ideaId if idea was created by logged in User
-================================== 
+🔍 Get Single Idea
+GET /<user>/ideas/<ideaId>
+Returns idea by ideaId.
 
 
-### https://<base url>/<user>/ideas/<ideaId>
-Gets Idea by ideaId
-================================== 
+❌ Delete Idea
+DELETE /<user>/ideas/<ideaId>
+Deletes idea by ideaId
+Only allowed if the idea belongs to the logged-in user
