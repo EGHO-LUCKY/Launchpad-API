@@ -5,8 +5,9 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const session = require("express-session");
 const passport = require("passport");
-const User = require("./models/users");
-
+const User = require("./models/user");
+const Idea = require("./models/idea");
+const _ = require("lodash");
 
 // INITIALIZE EXPRESS APP AND USE DEPENDENCIES
 const app = express();
@@ -44,7 +45,7 @@ run().catch(console.dir);
 
 // API ROUTES
 app.get("/", (req, res) => {
-    res.send("Home");
+    res.send("Register and/or login to use this platform");
 });
 
 app.post("/register", async (req, res, next) => {
@@ -96,14 +97,57 @@ app.post("/login", (req, res, next) => {
 });
 
 
-app.post("/logout", (req, res)=>{
+app.post("/logout", (req, res) => {
   if (!req.user) return res.json({message: "No User is logged in"});
   const user = req.user;
   req.logout(err=>{
     if (err) next(err);
   });
   res.json({ message: "Logged out Successfully", username: user.fullName })
-})
+});
+
+app.route("/:user/idea")
+  .get(async (req, res) => {
+    const fullName = _.lowerCase(req.params.user);
+    if (req.isAuthenticated()){
+      if (_.lowerCase(req.user.fullName) === fullName){
+        // Pass code here
+        const ideas = await Idea.find();
+        return res.send(ideas);
+      } else return res.json({message: `No Authentication found for ${fullName}`});
+    };
+    res.json({message: `No Authentication found for ${fullName}`});
+  })
+
+  .put(async (req, res) => {
+    if (!req.isAuthenticated()){
+      return res.json({message: "Not Authenticated"});
+    }
+
+    const {title, category, shortDescription, fullDescription} = req.body;
+
+    if (!title || !category || !shortDescription || !fullDescription){
+      return res.json({message: "Missing Idea field(s)"});
+    }
+
+    try {
+      // console.log(req.session);
+      const idea = await Idea.create({
+        author: req.user.fullName,
+        title,
+        category,
+        category,
+        shortDescription,
+        fullDescription
+      })
+
+      return res.json({message: "Idea Created Successfully", idea})
+    } catch(err){
+      console.log(err);
+      return res.json({message: "Error Creating Idea"});
+    }
+  });
+
 
 
 // SERVER
@@ -111,4 +155,4 @@ const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
     console.log(`Serving is running at PORT ${PORT}`);
-})
+});
