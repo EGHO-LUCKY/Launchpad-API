@@ -8,6 +8,7 @@ const passport = require("passport");
 const User = require("./models/user");
 const Idea = require("./models/idea");
 const _ = require("lodash");
+const connectDB = require("./config/db");
 
 // INITIALIZE EXPRESS APP AND USE DEPENDENCIES
 const app = express();
@@ -27,20 +28,15 @@ passport.deserializeUser(User.deserializeUser());
 
 
 // CONNECT TO MONGODB
-const clientOptions = { serverApi: { version: '1', strict: true, deprecationErrors: true } };
-
-async function run() {
-    try {
-        // Create a Mongoose client with a MongoClientOptions object to set the Stable API version
-        await mongoose.connect(process.env.MONGO_URI, clientOptions);
-        await mongoose.connection.db.admin().command({ ping: 1 });
-        console.log("Pinged your deployment. You successfully connected to MongoDB!");
-    } finally {
-        // Ensures that the client will close when you finish/error
-        // await mongoose.disconnect();
-    }
-}
-run().catch(console.dir);
+app.use(async (req, res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch (err) {
+    console.error("DB connection failed:", err)
+    res.json({ message: "Database connection failed" })
+  }
+});
 
 
 // API ROUTES
@@ -192,6 +188,10 @@ app.route("/:user/ideas/:ideaId")
 // SERVER
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, () => {
-    console.log(`Serving is running at PORT ${PORT}`);
-});
+if (process.env.NODE_ENV !== "production") {
+  app.listen(PORT, () => {
+    console.log(`Server running at PORT ${PORT}`);
+  });
+}
+
+module.exports = app;
