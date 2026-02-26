@@ -77,8 +77,8 @@ Required_Fields = {
 ```
 
 
-####  💡 Ideas  
-📄 Get All Ideas
+###  💡 Ideas  
+####  📄 Get All Ideas
 
 GET  `/<user>/ideas`  
 Returns all ideas published by users.
