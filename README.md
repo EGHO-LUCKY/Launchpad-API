@@ -94,10 +94,10 @@ Required_Fields = {
 }
 ```
 
-🔍 Get Single Idea
-```bash
-GET /<user>/ideas/<ideaId>
-```
+####  🔍 Get Single Idea
+
+GET `/<user>/ideas/<ideaId>`
+
 Returns idea by ideaId.
 
 
