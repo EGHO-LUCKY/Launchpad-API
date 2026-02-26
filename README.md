@@ -1,10 +1,11 @@
 # 🚀 Launchpad API
 
 > A RESTful API for registering users and publishing ideas.
+> [LIVE DEMO](https://launchpad-api-omega.vercel.app/)
 
 ---
 
-## 📌 Overview
+##  Overview
 
 Launchpad API allows users to:
 
@@ -15,16 +16,16 @@ Launchpad API allows users to:
 
 ---
 
-## ⚙️ Installation
+##  Installation
 
-### 1️⃣ Install dependencies
+###  Install dependencies
 
 ```bash
 pnpm install
 ```
 
 ---
-### 2️⃣ Setup environment variables
+###  Setup environment variables
 
 Create a .env file in the root directory and add:
 
@@ -34,23 +35,23 @@ MONGO_URI=your_database_connection_string
 SECRET=your_secret_key
 ```
 
-###  3️⃣ Run the server
+###  Run the server
 ```bash
 node app.js
 ```
 
-🌐 API Endpoints
+ API Endpoints
 ```bash
 <base_url> = Your deployed URL or http://localhost:PORT
 ```
 
-###  🏠 Root Route  
+###  Root Route  
 GET `/`  
 Returns: "Register and/or login to use this platform"
 
-###  👤 Authentication
+###  Authentication
 
-####  🔐 Register  
+####  Register  
 
 POST `/register`
 ```bash
@@ -61,12 +62,12 @@ Required_Fields = {
 }
 ```
 
-✅ On success:
+ On success:
 
 Registers user
 Automatically logs them in
 
-####  🔑 Login  
+####  Login  
 
 POST `/login`
 ```bash
@@ -76,14 +77,13 @@ Required_Fields = {
 }
 ```
 
-
-###  💡 Ideas  
-####  📄 Get All Ideas
+ 
+####  Get All Ideas
 
 GET  `/<user>/ideas`  
 Returns all ideas published by users.
 
-####  ➕ Create Idea  
+####  Create Idea  
 POST `/<user>/ideas`
 ```bash
 Required_Fields = {
@@ -94,14 +94,14 @@ Required_Fields = {
 }
 ```
 
-####  🔍 Get Single Idea
+####  Get Single Idea
 
 GET `/<user>/ideas/<ideaId>`
 
 Returns idea by ideaId.
 
 
-####  ❌ Delete Idea
+####  Delete Idea
 
 DELETE `/<user>/ideas/<ideaId>`
 
