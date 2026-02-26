@@ -84,7 +84,7 @@ GET  `/<user>/ideas`
 Returns all ideas published by users.
 
 ####  Create Idea  
-POST `/<user>/ideas`
+PUT `/<user>/ideas`
 ```bash
 Required_Fields = {
   "title": "string",
