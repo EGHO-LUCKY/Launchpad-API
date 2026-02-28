@@ -12,7 +12,7 @@ Launchpad API allows users to:
 - Register and get authenticated
 - Create and publish ideas
 - View ideas
-- Delete their own ideas
+- Update and Delete personal ideas
 
 ---
 
