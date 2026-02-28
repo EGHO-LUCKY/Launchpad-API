@@ -162,6 +162,40 @@ app.route("/:user/ideas/:ideaId")
     return res.json(idea);
   })
 
+  .patch(async (req, res) => {
+    if (!req.isAuthenticated()){
+      return res.json({message: "User not Authenticated"});
+    }
+    const {user, ideaId} = req.params;
+    if (user !== req.user.fullName){
+      return res.json({message: `${user} is not Authenticated`});
+    }
+
+    const idea = await Idea.findOne({_id: ideaId});
+    if (idea){
+      if (idea.authorId.equals(req.user._id)){
+        const {title, category, shortDescription, fullDescription} = req.body;
+        const newTitle = title || idea.title;
+        const newCategory = category || idea.category;
+        const newShortDescription = shortDescription || idea.shortDescription;
+        const newFullDescription = fullDescription || idea.fullDescription;
+
+        await Idea.updateOne({_id: idea._id},
+          {$set: {
+            title: newTitle,
+            category: newCategory,
+            shortDescription: newShortDescription,
+            fullDescription: newFullDescription
+          }}
+        )
+        
+        return res.json({message: `Successfully Updated Idea _id: ${ideaId}`})
+      } 
+      return res.json({message: `Idea _id: ${ideaId} can only be updated by Author ${idea.author}`});
+    } 
+    return res.json({message: `Idea with _id: ${ideaId} not found`});
+  })
+
   .delete(async (req, res) => {
     if (!req.isAuthenticated()){
       return res.json({message: "User not Authenticated"})
