@@ -42,7 +42,9 @@ node app.js
 
  API Endpoints
 ```bash
-<base_url> = Your deployed URL or http://localhost:PORT
+<base_url> is
+https://launchpad-api-omega.vercel.app/ or
+http://localhost:PORT
 ```
 
 ###  Root Route  
@@ -99,6 +101,14 @@ Required_Fields = {
 GET `/<user>/ideas/<ideaId>`
 
 Returns idea by ideaId.
+
+
+####  Update Idea
+
+PATCH `/<user>/ideas/<ideaId>`
+
+Updates an idea by ideaId
+Only allowed if the idea belongs to the logged-in user
 
 
 ####  Delete Idea
