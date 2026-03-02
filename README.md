@@ -42,8 +42,8 @@ node app.js
 
  API Endpoints
 ```bash
-<base_url> is
-https://launchpad-api-omega.vercel.app/ or
+<base_url>
+https://launchpad-api-omega.vercel.app/
 http://localhost:PORT
 ```
 
@@ -107,7 +107,7 @@ Returns idea by ideaId.
 
 PATCH `/<user>/ideas/<ideaId>`
 
-Updates an idea by ideaId
+Updates an idea by ideaId  
 Only allowed if the idea belongs to the logged-in user
 
 
@@ -115,5 +115,5 @@ Only allowed if the idea belongs to the logged-in user
 
 DELETE `/<user>/ideas/<ideaId>`
 
-Deletes idea by ideaId
+Deletes idea by ideaId  
 Only allowed if the idea belongs to the logged-in user
