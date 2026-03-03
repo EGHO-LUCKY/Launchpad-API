@@ -24,7 +24,7 @@ module.exports.getIdeas = async (req, res) => {
       const ideas = await Idea.find();
       return res.json(ideas);
     };
-    return res.json({message: `No Authentication found for ${fullName}`});
+    return res.status(401).json({message: `No Authentication found for ${fullName}`});
 };
 
 module.exports.putIdea = async (req, res, next) => {
@@ -41,7 +41,7 @@ module.exports.putIdea = async (req, res, next) => {
       return res.json({message: "Idea Created Successfully", idea});
     } catch(err){
       next(err);
-      return res.json({message: "Error Creating Idea"});
+      return res.status(500).json({message: "Error Creating Idea"});
     }
 }
 
@@ -49,7 +49,7 @@ module.exports.getIdea = async (req, res) => {
     const { ideaId } = req.params;
     const idea = await Idea.findOne({_id: req.params.ideaId});
     if (!idea){
-      return res.json({message: `Idea with _id: ${ideaId} not found`});
+      return res.status(404).json({message: `Idea with _id: ${ideaId} not found`});
     }
     return res.json(idea);
 }
@@ -57,10 +57,10 @@ module.exports.getIdea = async (req, res) => {
 module.exports.patchIdea = async (req, res) => {
     const { ideaId } = req.params;
     const idea = await Idea.findOne({_id: req.params.ideaId});
-    if (!idea) return res.json({message: `Idea with _id: ${ideaId} not found`});
+    if (!idea) return res.status(404).json({message: `Idea with _id: ${ideaId} not found`});
 
     if (!idea.authorId.equals(req.user._id)) {
-        return res.json({message: `Idea _id: ${ideaId} can only be updated by Author ${idea.author}`});
+        return res.status(401).json({message: `Idea _id: ${ideaId} can only be updated by Author ${idea.author}`});
     } 
 
     const {title, category, shortDescription, fullDescription} = req.body;
@@ -84,10 +84,10 @@ module.exports.patchIdea = async (req, res) => {
 module.exports.deleteIdea = async (req, res) => {
     const { ideaId } = req.params;
     const idea = await Idea.findOne({_id: ideaId});
-    if (!idea) return res.json({message: `Idea with _id: ${ideaId} not found`});
+    if (!idea) return res.status(404).json({message: `Idea with _id: ${ideaId} not found`});
 
     if (!idea.authorId.equals(req.user._id)) {
-        return res.json({message: `Idea _id: ${ideaId} can only be deleted by Author ${idea.author}`});
+        return res.status(401).json({message: `Idea _id: ${ideaId} can only be deleted by Author ${idea.author}`});
     }
 
     await Idea.deleteOne({_id: ideaId});
