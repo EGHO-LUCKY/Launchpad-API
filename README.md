@@ -86,7 +86,7 @@ GET  `/<user>/ideas`
 Returns all ideas published by users.
 
 ####  Create Idea  
-PUT `/<user>/ideas`
+PUT `/<user>/ideas/new`
 ```bash
 Required_Fields = {
   "title": "string",
@@ -101,6 +101,15 @@ Required_Fields = {
 GET `/<user>/idea-category`
 
 Returns ideas by Category.
+
+
+####  Get My published Idea
+
+GET `/<user>/my-ideas`
+
+Return User published ideas.
+
+
 
 ####  Get Single Idea
 
