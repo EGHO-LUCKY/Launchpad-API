@@ -10,15 +10,15 @@ module.exports = async (req, res, next) => {
         req.login(user, (err) => {
             if (err) {
                 next(err);
-                return res.json({ message: "Login after registration failed", error: err });
+                return res.status(500).json({ message: "Login after registration failed", error: err });
             }
             next();
         });
     } catch (err) {
         next(err);
         if (err.name === "UserExistsError") {
-            return res.json({ message: "Email already exist" });
+            return res.status(409).json({ message: "Email already exist" });
         };
-        return res.json({ message: "Failed to create user" });;
+        return res.status(500).json({ message: "Failed to create user" });;
     }
 }

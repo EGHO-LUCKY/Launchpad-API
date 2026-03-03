@@ -7,7 +7,7 @@ module.exports.home = (req, res) => {
 }
 
 module.exports.register = (req, res) => {
-    res.json({ message: "Registration and login successful", user: req.user.fullName });
+    res.status(201).json({ message: "Registration and login successful", user: req.user.fullName });
 }
 
 module.exports.login = (req, res) => {
@@ -38,7 +38,7 @@ module.exports.putIdea = async (req, res, next) => {
         shortDescription,
         fullDescription
       });
-      return res.json({message: "Idea Created Successfully", idea});
+      return res.status(201).json({message: "Idea Created Successfully", idea});
     } catch(err){
       next(err);
       return res.status(500).json({message: "Error Creating Idea"});
