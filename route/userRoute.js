@@ -20,5 +20,6 @@ router.put("/:user/ideas", userAuth, ideaValidator, userController.putIdea);
 router.get("/:user/ideas/:ideaId", userAuth, userController.getIdea);
 router.patch("/:user/ideas/:ideaId", userAuth, userController.patchIdea);
 router.delete("/:user/ideas/:ideaId", userAuth, userController.deleteIdea);
+router.get("/:user/idea-category", userAuth, userController.ideaCategory);
 
 module.exports = router;

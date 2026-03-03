@@ -96,6 +96,12 @@ Required_Fields = {
 }
 ```
 
+####  Get Idea by category
+
+GET `/<user>/idea-category`
+
+Returns ideas by Category.
+
 ####  Get Single Idea
 
 GET `/<user>/ideas/<ideaId>`

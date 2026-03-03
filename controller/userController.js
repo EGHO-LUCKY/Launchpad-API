@@ -93,3 +93,14 @@ module.exports.deleteIdea = async (req, res) => {
     await Idea.deleteOne({_id: ideaId});
     return res.json({message: `Successfully Deleted Idea _id: ${ideaId}`})
   }
+
+module.exports.ideaCategory = async (req, res) => {
+    const ideas = await Idea.aggregate([{
+        $group: {
+            _id: "$category",      // group by category field
+            ideas: { $push: "$$ROOT" }  // push full documents into each group
+        }}])
+        .sort({_id: 1}); // Sorts by _id in ascending order
+
+    res.json(ideas);
+}
