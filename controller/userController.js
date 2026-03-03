@@ -104,3 +104,8 @@ module.exports.ideaCategory = async (req, res) => {
 
     res.json(ideas);
 }
+
+module.exports.myIdeas = async (req, res) => {
+    const myIdeas = await Idea.find({authorId: req.user._id});
+    res.json(myIdeas);
+}
