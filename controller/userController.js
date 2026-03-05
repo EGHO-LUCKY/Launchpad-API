@@ -11,7 +11,7 @@ module.exports.register = (req, res) => {
 }
 
 module.exports.login = (req, res) => {
-    res.json({ message: "Logged in successfully", user: req.user.fullName });
+    res.status(200).json({ message: "Logged in successfully", user: req.user.fullName });
 }
 
 module.exports.logout = (req, res) => {

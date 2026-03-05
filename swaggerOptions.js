@@ -18,6 +18,7 @@ module.exports = (port) => ({
         ]
     },
     apis: [
-        "./route/userRoute.js"
+        "./docs/registerSwagger.js",
+        "./docs/loginSwagger.js",
     ]
 });
