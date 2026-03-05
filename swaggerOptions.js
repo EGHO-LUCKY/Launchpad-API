@@ -12,11 +12,7 @@ module.exports = (port) => ({
         },
         servers: [
             {
-                url: `http://localhost:${port}`,
-                description: "Local server"
-            },
-            {
-                url: "https://launchpad-api-omega.vercel.app",
+                url: "/",
                 description: "Testing server"
             }
         ]
