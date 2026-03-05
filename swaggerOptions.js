@@ -1,3 +1,5 @@
+const path = require("path");
+
 module.exports = (port) => ({
     definition: {
         openapi: "3.0.0",
@@ -18,7 +20,7 @@ module.exports = (port) => ({
         ]
     },
     apis: [
-        "./docs/registerSwagger.js",
-        "./docs/loginSwagger.js",
+        path.join(__dirname, "./docs/registerSwagger.js"),
+        path.join(__dirname, "./docs/loginSwagger.js"),
     ]
 });
