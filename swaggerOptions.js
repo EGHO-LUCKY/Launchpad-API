@@ -12,8 +12,8 @@ module.exports = (port) => ({
         },
         servers: [
             {
-                url: "/",
-                description: "Testing server"
+                url: process.env.SWAGGER_HOST || "http://localhost:3000",
+                description: "API server"
             }
         ]
     },
