@@ -10,6 +10,12 @@ const Idea = require("./models/idea");
 const _ = require("lodash");
 const connectDB = require("./config/db");
 const userRoute = require("./route/userRoute");
+const swaggerUi = require("swagger-ui-express");
+const swaggerJsdoc = require("swagger-jsdoc");
+const swaggerOptions = require("./swaggerOptions");
+
+const PORT = process.env.PORT || 3000;
+
 
 // INITIALIZE EXPRESS APP AND USE DEPENDENCIES
 const app = express();
@@ -21,7 +27,12 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(cors());
+
+// parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
+
+// parse application/json
+app.use(bodyParser.json());
 
 passport.use(User.createStrategy());
 passport.serializeUser(User.serializeUser());
@@ -41,12 +52,14 @@ app.use(async (req, res, next) => {
 
 
 // API ROUTES
+const swaggerSpec = swaggerJsdoc(swaggerOptions(PORT));
+app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
 app.use("/", userRoute);
 
 
 
 // SERVER
-const PORT = process.env.PORT || 3000;
 
 if (process.env.NODE_ENV !== "production") {
   app.listen(PORT, () => {

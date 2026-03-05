@@ -1,7 +1,7 @@
 module.exports = (req, res, next) => {
-    const { username, fullName, password } = req.body
+    const { username, email, password } = req.body
     
-    if (!username || !fullName || !password) {
+    if (!username || !email || !password) {
             return res.status(400).json({ message: "Missing Credentials" });
     };
 

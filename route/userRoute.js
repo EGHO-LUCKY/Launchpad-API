@@ -12,6 +12,70 @@ const router = express.Router();
 
 // ROUTES
 router.get("/", userController.home);
+/**
+ * @swagger
+ * tags:
+ *   - name: Registration
+ *     description: Register users routes
+ */
+
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     UserCreateReqDto:
+ *       type: object
+ *       required:
+ *         - username
+ *         - email
+ *         - password
+ *       properties:
+ *         username:
+ *           type: string
+ *           description: Fullname
+ *         email:
+ *           type: string
+ *           description: Email
+ *         password:
+ *           type: string
+ *           description: Password
+ *     UserCreateResDto:
+ *       type: object
+ *       properties:
+ *         message:
+ *           type: string
+ *           description: Registration outcome
+ *         user:
+ *           type: string
+ *           description: Fullname of User
+ *       example:
+ *         message: Registration and login successful
+ *         user: Lucky Egho
+ */
+
+
+/**
+ * @swagger
+ * /register:
+ *   post:
+ *     summary: Registers a new user
+ *     tags: [Registration]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/UserCreateReqDto'
+ *     responses:
+ *       "200":
+ *         description: The Fullname of the registered user and success message
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/UserCreateResDto'
+ */
+
+
 router.post("/register", registrationValidator, registerLogin, userController.register); // Registers User
 router.post("/login", authLogin, userController.login); // Logs in User
 router.get("/logout", logout, userController.logout); // Logs out User
