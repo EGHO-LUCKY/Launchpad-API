@@ -22,5 +22,6 @@ module.exports = (port) => ({
     apis: [
         path.join(__dirname, "./docs/registerSwagger.js"),
         path.join(__dirname, "./docs/loginSwagger.js"),
+        path.join(__dirname, "./docs/ideasSwagger.js")
     ]
 });

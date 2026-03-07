@@ -1,6 +1,7 @@
 const User = require("../models/user");
 const Idea = require("../models/idea");
 const _ = require("lodash");
+const mongoose = require("mongoose");
 
 module.exports.home = (req, res) => {
     res.json({message: "Register and/or login to use this platform"});
@@ -45,18 +46,26 @@ module.exports.putIdea = async (req, res, next) => {
     }
 }
 
-module.exports.getIdea = async (req, res) => {
+module.exports.getIdea = async (req, res, next) => {
     const { ideaId } = req.params;
-    const idea = await Idea.findOne({_id: req.params.ideaId});
-    if (!idea){
-      return res.status(404).json({message: `Idea with _id: ${ideaId} not found`});
+    if (!mongoose.Types.ObjectId.isValid(ideaId)) {
+        return res.status(400).json({ message: `Invalid idea _id: ${ideaId}` });
     }
-    return res.json(idea);
+
+    const idea = await Idea.findOne({_id: req.params.ideaId});
+    if (idea) {
+        return res.json(idea);
+    }
+    return res.status(404).json({message: `Idea with _id: ${ideaId} not found`});
 }
 
 module.exports.patchIdea = async (req, res) => {
-    const { ideaId } = req.params;
-    const idea = await Idea.findOne({_id: req.params.ideaId});
+    let { ideaId } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(ideaId)) {
+        return res.status(400).json({ message: `Invalid idea _Id: ${ideaId}` });
+    }
+  
+    const idea = await Idea.findOne({_id: ideaId});
     if (!idea) return res.status(404).json({message: `Idea with _id: ${ideaId} not found`});
 
     if (!idea.authorId.equals(req.user._id)) {
@@ -83,6 +92,10 @@ module.exports.patchIdea = async (req, res) => {
 
 module.exports.deleteIdea = async (req, res) => {
     const { ideaId } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(ideaId)) {
+        return res.status(400).json({ message: `Invalid idea _Id: ${ideaId}` });
+    }
+
     const idea = await Idea.findOne({_id: ideaId});
     if (!idea) return res.status(404).json({message: `Idea with _id: ${ideaId} not found`});
 
