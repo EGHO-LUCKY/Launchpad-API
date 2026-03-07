@@ -1,7 +1,7 @@
 # 🚀 Launchpad API
 
 > A RESTful API for registering users and publishing ideas.
-> [LIVE DEMO](https://launchpad-api-omega.vercel.app/)
+> [Swagger Documentation](https://launchpad-api-omega.vercel.app/docs)
 
 ---
 
@@ -86,7 +86,7 @@ GET  `/<user>/ideas`
 Returns all ideas published by users.
 
 ####  Create Idea  
-PUT `/<user>/ideas/new`
+POST `/<user>/ideas/`
 ```bash
 Required_Fields = {
   "title": "string",
