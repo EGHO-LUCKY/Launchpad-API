@@ -1,5 +1,5 @@
 module.exports = (req, res, next) => {
-  if (!req.user) return res.json({message: "No User is logged in"});
+  if (!req.user) return res.status(400).json({message: "No User is logged in"});
 
   req.loggedOutUser = req.user;
   req.logout(err => {

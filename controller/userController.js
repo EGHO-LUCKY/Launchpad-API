@@ -16,7 +16,7 @@ module.exports.login = (req, res) => {
 }
 
 module.exports.logout = (req, res) => {
-    res.json({ message: "Logged out Successfully", username: req.loggedOutUser.fullName });
+    res.json({ message: "Logged out Successfully", user: req.loggedOutUser.fullName });
 }
 
 module.exports.getIdeas = async (req, res) => {
