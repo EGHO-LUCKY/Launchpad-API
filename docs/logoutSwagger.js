@@ -9,7 +9,7 @@
  * @swagger
  * /logout:
  *   get:
- *     summary: Logs in User
+ *     summary: Logs out User
  *     tags: [Logout]
  *     responses:
  *       200:
